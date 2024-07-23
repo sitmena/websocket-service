@@ -1,0 +1,30 @@
+# values.yaml
+
+image:
+  repository: my-docker-repo/websocket-app
+  tag: latest
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080 # WebSocket server port inside the container
+
+ingress:
+  enabled: false
+  name: ""
+  annotations: {}
+  path: /ws
+  hosts:
+    - host: websocket-example.local
+      paths:
+        - /ws # external connection is only whitelisted to this port
+  tls: []
+
+resources: {}
+
+env:
+  - name: PUBLIC_KEY
+    value: "your_public_key_here"

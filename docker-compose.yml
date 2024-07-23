@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  web:
+    image: websocket-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: websocket-service
+    ports:
+      - "8010:8010"
+    environment:
+      - PUBLIC_KEY=${PUBLIC_KEY}
+    volumes:
+      - .:/app
+# Add other services here if needed, e.g., database
+#    depends_on:
+#      - services needed
+#   Add needed network
+#    networks:
+#      - netowrk-example
+
+#
+#networks:
+#  fastapi-network:
+#    driver: bridge
