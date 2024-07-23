@@ -25,6 +25,6 @@ async def websocket_endpoint(websocket: WebSocket, token: str):
 
 @app.post("/send-message")
 async def send_message_to_ws(data: Message):
-    user_id = await get_current_user(data.token)
+    user_id = await get_current_user(data.user_id)
     await manager.send_message(user_id, data.message)
     return {"status": "message sent"}
