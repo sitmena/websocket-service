@@ -6,7 +6,12 @@ metadata:
     {{- with .Values.ingress.annotations }}
     {{ toYaml . | nindent 4 }}
     {{- end }}
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"  # To support WebSocket connections
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"  # WebSocket timeout configuration
+    nginx.ingress.kubernetes.io/upstream-keepalive-connections: "100"  # Keep connections alive
+
 spec:
+  ingressClassName: nginx
   rules:
     {{- with .Values.ingress.hosts }}
     {{- range . }}
@@ -28,7 +33,15 @@ spec:
   tls:
     {{- range . }}
     - hosts:
-      - {{ .hosts }}
+        {{- range .hosts }}
+        - {{ . }}  # Ensure hosts is a list of strings
+        {{- end }}
       secretName: {{ .secretName }}
     {{- end }}
   {{- end }}
+status:
+  loadBalancer:
+    ingress:
+      - ip: 10.130.15.19
+      - ip: 10.130.15.20
+      - ip: 10.130.15.21

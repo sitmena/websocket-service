@@ -1,4 +1,6 @@
 fastapi
-uvicorn
+uvicorn[standard]
 pydantic
 pyjwt
+redis
+pywebpush

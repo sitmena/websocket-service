@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="a6a9fb16-3690-46c5-836f-443464d93894" name="doroob-staging">
+        <fileTransfer rootFolder="/home/ops.f.tamimi-c" accessType="SFTP" host="10.130.15.31" port="22" sshConfigId="27901bb4-c3bd-4c18-bbe7-693f96b59034" sshConfig="ops.f.tamimi-c@10.130.15.31:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

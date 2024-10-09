@@ -4,21 +4,28 @@
 import requests
 from django.conf import settings
 
-class FastAPIClient:
+class InAppNotificationClient:
     def __init__(self):
-        self.base_url = settings.WEBSOCKET_SERVICE
+        self.base_url = settings.WEBSOCKET_SERVICE_URL
 
-    def send_message(self, token: str, message: str):
-        url = f"{self.base_url}/send-message"
-        payload = {
-            'token': token,
-            'message': message
-        }
+    def send_message(self, title, message, user_id):
+        send_message_url = self.base_url+"/send-message"
+        send_message_url += "&message=" + message
+        send_message_url += "&title=" + title
+        send_message_url += "&user_id" + user_id
         try:
-            response = requests.post(url, json=payload)
+            response = requests.post(url)
             response.raise_for_status()
             return response.json()
         except requests.exceptions.RequestException as e:
             return {'error': str(e)}
+```
 
+Usage Example
+```python
+InAppNotificationClient().send_message(
+    title='Title exmaple', 
+    message='message example.',
+    user_id='23'
+)
 ```

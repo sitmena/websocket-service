@@ -1,18 +1,17 @@
 # Define the image name
-IMAGE_NAME = websocket-service
+IMAGE_NAME = doroob20docker/websocket-service
 
 # Command to build the Docker image
 build:
-	docker build -t $(IMAGE_NAME) .
+	docker buildx build --platform linux/amd64 -t $(IMAGE_NAME):11 .
 
 # Command to run the Docker container
 run:
-
+	docker-compose up -d
 
 # Command to stop and remove the Docker container
 stop:
-	docker stop $(CONTAINER_NAME) || true
-	docker rm $(CONTAINER_NAME) || true
+	docker-compose down
 
 # Command to stop, remove, and run the Docker container
 restart: stop run

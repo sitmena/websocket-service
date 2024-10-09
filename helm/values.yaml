@@ -1,30 +1,27 @@
-# values.yaml
-
 image:
-  repository: my-docker-repo/websocket-app
-  tag: latest
-  pullPolicy: IfNotPresent
+  repository: docker.io/doroob20docker/websocket-service
+  tag: 3.0
+  pullPolicy: Always
 
 replicaCount: 1
 
 service:
   type: ClusterIP
   port: 80
-  targetPort: 8080 # WebSocket server port inside the container
+  targetPort: 8010 # WebSocket server port inside the container
 
 ingress:
   enabled: false
   name: ""
-  annotations: {}
-  path: /ws
   hosts:
-    - host: websocket-example.local
+    - host: websocket-stg.doroob.sa
       paths:
-        - /ws # external connection is only whitelisted to this port
-  tls: []
-
-resources: {}
+        - /ws # external connection is only whitelisted to this path
+  tls:
+    - hosts:
+        - websocket-stg.doroob.sa
+      secretName: doroob-ssl
 
 env:
-  - name: PUBLIC_KEY
-    value: "your_public_key_here"
+  - name: JWT_KEY
+    value: "+2qyhjgx@5kf&g)^x^^ked2h1(%jr58f5b!*gv^&7)k)#4-9+5"

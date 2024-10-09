@@ -24,3 +24,5 @@ spec:
         {{- with .Values.env }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
+      imagePullSecrets:
+        - name: doroob-docker-registry-secret
