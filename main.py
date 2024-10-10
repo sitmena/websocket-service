@@ -30,30 +30,29 @@ class ConnectionManager:
 
 manager = ConnectionManager()
 
-async def get_current_user_id(request: Request):
-    auth_header = request.headers.get("Authorization")
-    if not auth_header or not auth_header.startswith("Bearer "):
+async def get_current_user_id(websocket: WebSocket):
+    auth_cookie = websocket.cookies.get("Authorization")
+    if not auth_cookie:
         raise HTTPException(status_code=401, detail="Invalid authorization token")
 
     # Simulate token decoding. In a real scenario, decode the token here
-    token = auth_header.split(" ")[1]
     from jwt import decode
-    decoded = decode(token, JWT_TOKEN_KEY, algorithms=["HS256"])
+    decoded = decode(auth_cookie, JWT_TOKEN_KEY, algorithms=["HS256"])
     user_id = decoded.get('user_id')
     return user_id
 
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
+
+    user_id = await get_current_user_id(websocket)
+    await manager.connect(websocket, user_id)
     try:
-        user_id = await get_current_user_id(websocket)
-        await manager.connect(websocket, user_id)
-        try:
-            while True:
-                data = await websocket.receive_text()
-                # Handle received data from WebSocket if needed
-        except WebSocketDisconnect:
-            manager.disconnect(user_id)
+        while True:
+            data = await websocket.receive_text()
+            # Handle received data from WebSocket if needed
+    except WebSocketDisconnect:
+        manager.disconnect(user_id)
     except HTTPException:
         await websocket.close()
 
