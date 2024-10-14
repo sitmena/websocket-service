@@ -61,7 +61,8 @@ async def websocket_endpoint(websocket: WebSocket):
 @app.post("/send-message/")
 async def send_message(request: Request, user_id: str, title: str, message: str):
     """Send a push notification to a specific user using a RESTful API"""
-    await manager.send_message(message, title, user_id)
+    await manager.send_message(user_id ,title, message)
+    await manager.send_message(user_id, "Testing Message", "You are not connected, user: "+ user_id)
     return {"status": "Message sent"}
 
 # Dependency to extract user_id from an authorization token
