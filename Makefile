@@ -3,7 +3,7 @@ IMAGE_NAME = doroob20docker/websocket-service
 
 # Command to build the Docker image
 build:
-	docker buildx build --platform linux/amd64 -t $(IMAGE_NAME):18 .
+	docker buildx build --platform linux/amd64 -t $(IMAGE_NAME):v-1.0 .
 
 # Command to run the Docker container
 run:

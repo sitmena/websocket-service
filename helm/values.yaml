@@ -16,7 +16,7 @@ ingress:
   hosts:
     - host: websocket-stg.doroob.sa
       paths:
-        - /ws # external connection is only whitelisted to this path
+        - / # external connection is only whitelisted to this path
   tls:
     - hosts:
         - websocket-stg.doroob.sa
