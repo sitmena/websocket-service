@@ -1,0 +1,14 @@
+image: atlassian/default-image:2
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Build and Push Image
+          services:
+            - docker
+          caches:
+            - docker
+          script:
+            - make build tag=$BITBUCKET_COMMIT
+            - docker login --username doroob20docker --password '8&h6d3~%#GRs3Xjq'
+            - docker push doroob20docker/websocket-service:$BITBUCKET_COMMIT
