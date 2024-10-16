@@ -6,6 +6,7 @@ from asgiref.sync import async_to_sync
 
 username = os.getenv("RABBIT_USER", "user")
 password = os.getenv("RABBIT_PASS", "pass")
+rabbit_host = os.getenv("RABBIT_HOST", "rabbitmq")
 
 credentials = pika.PlainCredentials(username, password)
 
@@ -13,7 +14,7 @@ class MessageQueue:
     def __init__(self) -> None:
         # Initializing the Message Queue
         self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host="rabbitmq", port=5672, credentials=credentials, heartbeat=600)
+            pika.ConnectionParameters(host=rabbit_host, credentials=pika.PlainCredentials(username, password), port=5672, heartbeat=600)
         )
         self.channel = self.connection.channel()
         self.wsok_manager = manager
